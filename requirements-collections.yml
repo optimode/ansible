@@ -1,0 +1,9 @@
+---
+collections:
+  - community.general
+  - community.docker
+  - community.hashi_vault
+  - ansible.posix
+  - community.mysql
+  - community.mongodb
+  - community.crypto

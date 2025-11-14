@@ -1,0 +1,16 @@
+# Ansible 12.x (latest) dependencies
+# Python 3.12 compatible
+
+# Ansible full package, ansible-core=2.19.4
+ansible==12.2.0
+ansible-lint
+
+# HashiCorp Vault integration
+hvac==2.1.0
+
+# Utility libraries
+jmespath==1.0.1
+netaddr==1.2.1
+
+# Docker support
+docker==7.1.0
