@@ -29,7 +29,7 @@ A production-ready Docker image for Ansible with HashiCorp Vault support and 70+
 Run an Ansible ad-hoc command:
 
 ```bash
-docker run --rm optimode/ansible:latest ansible --version
+docker run --rm ghcr.io/optimode/ansible:latest ansible --version
 ```
 
 Run a playbook from your local directory:
@@ -37,7 +37,7 @@ Run a playbook from your local directory:
 ```bash
 docker run --rm \
   -v $(pwd):/workspace \
-  optimode/ansible:latest \
+  ghcr.io/optimode/ansible:latest \
   ansible-playbook playbook.yml
 ```
 
@@ -48,7 +48,7 @@ Start an interactive session:
 ```bash
 docker run --rm -it \
   -v $(pwd):/workspace \
-  optimode/ansible:latest
+  ghcr.io/optimode/ansible:latest
 ```
 
 ## Pre-installed Collections
@@ -191,7 +191,7 @@ Mount your SSH keys for remote host access:
 docker run --rm \
   -v $(pwd):/workspace \
   -v ~/.ssh:/home/ansible/.ssh:ro \
-  optimode/ansible:latest \
+  ghcr.io/optimode/ansible:latest \
   ansible-playbook -i inventory.ini playbook.yml
 ```
 
@@ -203,7 +203,7 @@ Pass vault password via file:
 docker run --rm \
   -v $(pwd):/workspace \
   -v $(pwd)/.vault-pass:/home/ansible/.vault-pass:ro \
-  optimode/ansible:latest \
+  ghcr.io/optimode/ansible:latest \
   ansible-playbook --vault-password-file=/home/ansible/.vault-pass playbook.yml
 ```
 
@@ -213,7 +213,7 @@ Or via environment variable:
 docker run --rm \
   -v $(pwd):/workspace \
   -e ANSIBLE_VAULT_PASSWORD=mysecret \
-  optimode/ansible:latest \
+  ghcr.io/optimode/ansible:latest \
   ansible-playbook playbook.yml
 ```
 
@@ -226,7 +226,7 @@ docker run --rm \
   -v $(pwd):/workspace \
   -e VAULT_ADDR=https://vault.example.com:8200 \
   -e VAULT_TOKEN=s.xxxxxxxxxxxxxx \
-  optimode/ansible:latest \
+  ghcr.io/optimode/ansible:latest \
   ansible-playbook playbook.yml
 ```
 
@@ -237,7 +237,7 @@ Use dynamic inventory or custom inventory files:
 ```bash
 docker run --rm \
   -v $(pwd):/workspace \
-  optimode/ansible:latest \
+  ghcr.io/optimode/ansible:latest \
   ansible-playbook -i inventory/production.yml deploy.yml
 ```
 
@@ -248,14 +248,14 @@ Install collections at runtime:
 ```bash
 docker run --rm \
   -v $(pwd):/workspace \
-  optimode/ansible:latest \
+  ghcr.io/optimode/ansible:latest \
   bash -c "ansible-galaxy collection install my.collection && ansible-playbook playbook.yml"
 ```
 
 Or build a custom image:
 
 ```dockerfile
-FROM optimode/ansible:latest
+FROM ghcr.io/optimode/ansible:latest
 
 USER root
 COPY my-collections.yml /tmp/
@@ -271,7 +271,7 @@ Override the default user (UID 1000):
 docker run --rm \
   --user $(id -u):$(id -g) \
   -v $(pwd):/workspace \
-  optimode/ansible:latest \
+  ghcr.io/optimode/ansible:latest \
   ansible-playbook playbook.yml
 ```
 
@@ -292,7 +292,7 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -e ANSIBLE_VAULT_PASSWORD=${{ secrets.VAULT_PASSWORD }} \
-            optimode/ansible:latest \
+            ghcr.io/optimode/ansible:latest \
             ansible-playbook -i inventory/production.yml deploy.yml
 ```
 
@@ -300,7 +300,7 @@ jobs:
 
 ```yaml
 deploy:
-  image: optimode/ansible:latest
+  image: ghcr.io/optimode/ansible:latest
   script:
     - ansible-playbook -i inventory/production.yml deploy.yml
   only:
@@ -338,7 +338,7 @@ cat > playbook.yml <<EOF
 EOF
 
 # Run it
-docker run --rm -v $(pwd):/workspace optimode/ansible:latest \
+docker run --rm -v $(pwd):/workspace ghcr.io/optimode/ansible:latest \
   ansible-playbook playbook.yml
 ```
 
@@ -350,7 +350,7 @@ docker run --rm \
   -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
   -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
   -e AWS_DEFAULT_REGION=us-east-1 \
-  optimode/ansible:latest \
+  ghcr.io/optimode/ansible:latest \
   ansible-playbook aws-deploy.yml
 ```
 
@@ -360,7 +360,7 @@ docker run --rm \
 docker run --rm \
   -v $(pwd):/workspace \
   -v ~/.kube/config:/home/ansible/.kube/config:ro \
-  optimode/ansible:latest \
+  ghcr.io/optimode/ansible:latest \
   ansible-playbook k8s-deploy.yml
 ```
 
@@ -369,7 +369,7 @@ docker run --rm \
 ```bash
 docker run --rm \
   -v $(pwd):/workspace \
-  optimode/ansible:latest \
+  ghcr.io/optimode/ansible:latest \
   ansible-playbook -i network-inventory.ini configure-switches.yml
 ```
 
@@ -399,7 +399,7 @@ If you encounter permission errors with mounted volumes:
 
 ```bash
 # Run as your current user
-docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace optimode/ansible:latest ansible-playbook playbook.yml
+docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace ghcr.io/optimode/ansible:latest ansible-playbook playbook.yml
 
 # Or fix ownership
 sudo chown -R 1000:1000 /path/to/your/workspace
@@ -410,7 +410,7 @@ sudo chown -R 1000:1000 /path/to/your/workspace
 Enable SSH debugging:
 
 ```bash
-docker run --rm -v $(pwd):/workspace optimode/ansible:latest \
+docker run --rm -v $(pwd):/workspace ghcr.io/optimode/ansible:latest \
   ansible-playbook -vvv playbook.yml
 ```
 
@@ -419,13 +419,13 @@ docker run --rm -v $(pwd):/workspace optimode/ansible:latest \
 Verify installed collections:
 
 ```bash
-docker run --rm optimode/ansible:latest ansible-galaxy collection list
+docker run --rm ghcr.io/optimode/ansible:latest ansible-galaxy collection list
 ```
 
 Install missing collection:
 
 ```bash
-docker run --rm optimode/ansible:latest \
+docker run --rm ghcr.io/optimode/ansible:latest \
   ansible-galaxy collection install namespace.collection
 ```
 
