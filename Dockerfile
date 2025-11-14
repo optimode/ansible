@@ -24,11 +24,6 @@ RUN ansible-galaxy collection install -r /tmp/requirements-collections.yml && \
 # Working directory
 WORKDIR /workspace
 
-# Non-root user
-RUN useradd -m -u 1000 ansible && \
-    chown -R ansible:ansible /workspace
-
-
 ARG URL
 ARG SOURCE
 ARG BUILD_DATE
@@ -55,6 +50,5 @@ LABEL \
     "org.opencontainers.image.ref.name"="python:${PYTHON_VERSION}-slim"
 
 
-USER ansible
-
 CMD ["/bin/bash"]
+

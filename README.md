@@ -257,15 +257,11 @@ Or build a custom image:
 ```dockerfile
 FROM ghcr.io/optimode/ansible:latest
 
-USER root
 COPY my-collections.yml /tmp/
 RUN ansible-galaxy collection install -r /tmp/my-collections.yml
-USER ansible
 ```
 
 ### Running as Different User
-
-Override the default user (UID 1000):
 
 ```bash
 docker run --rm \
@@ -400,9 +396,6 @@ If you encounter permission errors with mounted volumes:
 ```bash
 # Run as your current user
 docker run --rm --user $(id -u):$(id -g) -v $(pwd):/workspace ghcr.io/optimode/ansible:latest ansible-playbook playbook.yml
-
-# Or fix ownership
-sudo chown -R 1000:1000 /path/to/your/workspace
 ```
 
 ### SSH Connection Issues
